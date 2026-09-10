@@ -15,7 +15,7 @@ and following Solve CRM's rules when changing records and activities.
 
 | Component | Name | Purpose |
 |---|---|---|
-| Remote MCP server | `solve-mcp` (`https://mcp.solve360.com`) | Exposes the Solve record, activity, and insight tools |
+| Remote MCP server | `solve-mcp` (`https://mcp.solve360.com`) | Exposes the Solve CRM record, activity, and insight tools |
 | Skill | `solve-skill` | Governs correct tool use across searching, reporting, and record/activity changes |
 
 The skill is **model-invoked**:
@@ -35,7 +35,7 @@ and deleted.
 ## Requirements
 
 - **A Solve CRM account.** Authentication uses your own Solve login via OAuth;
-  the plugin can read, create, and modify records and activities in your live Solve data,
+  the plugin can read, create, and modify records and activities in your live Solve CRM data,
   scoped to what your account is permitted to do.
 - **A Claude client that supports plugins** — Claude Code (CLI, IDE extension,
   or desktop app), or the Claude desktop app's Cowork mode.
@@ -86,7 +86,7 @@ the Solve CRM MCP server uses OAuth and needs a one-time sign-in:
 1. Run `/mcp`.
 2. Select `plugin:solve-plugin:solve-mcp` — it shows `needs authentication` — and press Enter.
 3. In the menu that opens, choose **Authenticate**.
-4. A browser window opens; sign in to Solve and approve access.
+4. A browser window opens; sign in to Solve CRM and approve access.
 5. Return to Claude — you'll see `Authentication successful.
    Connected to plugin:solve-plugin:solve-mcp.` and the Solve CRM tools are ready.
 
@@ -164,14 +164,14 @@ resolves names/tags to the IDs the API needs.
 
 ## How it works
 
-Solve has a specific query model (search modes, filter modes,
+Solve CRM has a specific query model (search modes, filter modes,
 and a combined `ucf` structure for multi‑criteria queries),
 plus strict rules for writing records and activities. Left to guess,
 an assistant will often issue several separate searches, malformed filters,
-or invalid field values. The bundled `solve-crm` skill encodes the correct rules —
+or invalid field values. The bundled `solve-skill` skill encodes the correct rules —
 single combined calls, name→ID resolution, date/timezone handling,
 ownership confirmation before creating private records,
-and explicit confirmation before deletes — so Claude uses the API the way Solve expects.
+and explicit confirmation before deletes — so Claude uses the API the way Solve CRM expects.
 
 ---
 

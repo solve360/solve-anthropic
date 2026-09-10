@@ -52,7 +52,7 @@ instead of "blog" or "project blog" when communicating with the user.
 
 ## Rule for getting information about the user currently logged in Solve CRM
 
-When you need to get the ID of the user currently logged in Solve360 CRM, use `solve360_account` tool. It returns `userid` — use that value. ID lets you retrieve the information about the user's account using `solve360_ownership`.
+When you need to get the ID of the user currently logged in Solve CRM, use `solve360_account` tool. It returns `userid` — use that value. ID lets you retrieve the information about the user's account using `solve360_ownership`.
 
 ---
 
@@ -69,7 +69,7 @@ Before constructing any search, you **MUST** read:
 The instructions from `solve360_docs("search_args")` and `solve360_docs("ucf")` are **CRITICAL**. Violating any of these rules is **STRICTLY PROHIBITED** and will cause wrong results for the user. Before using `solve360_search`, read these instructions carefully and make sure all arguments, including `ucf`, are correctly formatted.
 
 **CRITICAL**: when searching for records having or not having certain activities, activity types or activity values **NEVER USE** any of the following tools:
-`solve360_activities`, `solve360_deals`, `solve360_followups`, `solve360_nextactions`, `solve360_timetracking`. These tools are **NOT** for record searching.
+`solve360_activities`, `solve360_deals`, `solve360_followups`, `solve360_next_actions`, `solve360_timetracking`. These tools are **NOT** for record searching.
 But **ALWAYS** use `solve360_batch` tool to load the records found by
 `solve360_search` tool for all non-activity-related criteria and filter by
 the criteria related to activities then.
