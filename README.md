@@ -99,36 +99,33 @@ then choose **Clear authentication**.
 
 ### Claude web/desktop (Cowork)
 
-Add the marketplace:
+Add the marketplace (the UI may differ slightly depending on your Claude version):
 
-1. Click the **+** to the left of the Chat/Cowork selector, then select **Add plugins**.
-2. In the window that appears, click **+** again and choose **Add from a repository**.
-3. Paste `https://github.com/solve360/solve-anthropic.git` into the form and click **Sync**.
+1. Click the **+** to the left of the Chat/Cowork selector, then select **Add plugins** / **Manage plugins**.
+2. In the window that appears, click the **Add** button, then choose **Add marketplace** from the menu.
+3. In the dialog that opens, click **Add from a repository**.
+4. Paste `https://github.com/solve360/solve-anthropic.git` or `solve360/solve-anthropic` into the form and turn on **Sync automatically** if that option is shown. Then click **Sync** — the window closes.
 
 Install the plugin:
 
-4. The marketplace now appears — click it, then click **Install**.
+5. The **Plugins** page now appears — click **Solve CRM**, then click **Add** to enable it.
 
 Install and connect the MCP connector:
 
-5. Click **Manage**, then open the **Connectors** tab. If you see **Connect**, click it and go to step 8. Otherwise, click **Install**.
-6. Click **Add** in the dialog that appears.
-7. A **Connect** button appears next to the solve360 connector — click it.
-8. A browser window opens; sign in to your Solve360 account and authorize the connector.
+6. Open the **Connectors** tab, then click **Connect**.
+7. Click the **Continue** button, then click **Add** when the **Add custom connector** dialog appears.
+8. If a browser window doesn't open, click **Connect** again. Otherwise, proceed to step 9.
+9. A browser window opens. If you see a **Continue connecting** button, click it. Sign in to your Solve CRM account and authorize the connector.
 
 The plugin is now ready to use in Cowork.
 
 **Updating.** To move to a newer version of the plugin:
 
-1. Click **Customize** in the sidebar, then open the **Plugins** tab.
-2. Click **Solve360** — its page has an **Update** button.
-3. If **Update** is enabled, click it and go to step 7.
-4. If **Update** is disabled, click the **solve-anthropic** link on that page,
-   then open the **Personal** tab.
-5. Click the **...** icon next to **solve-anthropic** and choose **Check for updates**.
-6. Return to the **Solve360** page.
-   **Update** is now enabled if a new version is available — click it.
-7. Restart Cowork. The new version number is shown after the relaunch.
+1. Click **Customize** in the sidebar, then open the **Plugins** tab and select **Yours**.
+2. Click **Solve CRM** — its page has an **Update** button.
+3. If **Update** is enabled, click it and go to step 5.
+4. If **Update** is disabled, click the three-dots icon and choose **Check for updates**. **Update** becomes enabled if a new version is available — click it.
+5. Restart Cowork. The new version number is shown after the relaunch.
 
 ### Local development / testing
 

@@ -3,7 +3,7 @@
   "name": "solve-plugin",
   "displayName": "Solve CRM",
   "description": "Work with Solve CRM from Claude via the Solve CRM remote MCP server: search and retrieve records (contacts, companies, projects, tickets), create and update records, add and modify activities (tasks, notes, follow-ups, deals), and pull calendar, deals and time-tracking insights — with a skill that governs correct tool use",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "author": {
     "name": "Norada Corp",
     "email": "support@norada.com",
