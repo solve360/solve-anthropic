@@ -143,7 +143,7 @@ follow the `/mcp` steps under [Claude Code](#claude-code) above.
 ## Usage
 
 Just ask in natural language.
-The skill handles translating your request into the correct Solve360 tool calls. Examples:
+The skill handles translating your request into the correct Solve CRM tool calls. Examples:
 
 - "Find contacts named Aaron"
 - "Show me companies tagged Client"
@@ -178,7 +178,7 @@ and explicit confirmation before deletes — so Claude uses the API the way Solv
 ## Support
 
 Maintained by **Norada Corp**. Questions or issues:
-[support@norada.com](mailto:support@norada.com) · [Solve MCP](https://solve360.com/api/mcp-server-for-ai-agents/)
+[support@norada.com](mailto:support@norada.com) · [Solve CRM MCP](https://solve360.com/api/mcp-server-for-ai-agents/)
 
 ---
 
