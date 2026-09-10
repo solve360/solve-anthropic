@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "solve360",
+  "displayName": "Solve360",
+  "description": "Work with Solve360 CRM from Claude via the Solve360 remote MCP server: search and retrieve records (contacts, companies, projects, tickets), create and update records, add and modify activities (tasks, notes, follow-ups, deals), and pull calendar, deals and time-tracking insights — with a skill that governs correct tool use",
+  "version": "1.0.5",
+  "author": {
+    "name": "Norada Corp",
+    "email": "support@norada.com",
+    "url": "https://norada.com"
+  },
+  "homepage": "https://solve360.com/api/mcp-server-for-ai-agents/",
+  "repository": "https://github.com/solve360/solve-anthropic",
+  "license": "MIT",
+  "keywords": ["solve360", "crm", "mcp", "search", "contacts", "companies", "tickets", "activities", "tasks", "deals", "sales", "time-tracking"],
+  "mcpServers": {
+    "solve360": {
+      "type": "http",
+      "url": "https://mcp.solve360.com"
+    }
+  }
+}

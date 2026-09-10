@@ -1,13 +1,13 @@
-# Solve CRM plugin for Claude
+# Solve360 CRM plugin for Claude
 
-Work with your [Solve CRM](https://solve360.com) — contacts, companies, projects,
+Work with your [Solve360 CRM](https://solve360.com) — contacts, companies, projects,
 and tickets — directly from Claude, using natural language. Search and retrieve records,
 create and update them, add and modify activities (tasks, notes, follow-ups, deals),
 and pull calendar, deals, and time-tracking insights.
 
-This plugin connects Claude to the Solve CRM remote MCP server and ships a skill that teaches Claude how to use its tools correctly —
+This plugin connects Claude to the Solve360 remote MCP server and ships a skill that teaches Claude how to use its tools correctly —
 building valid queries, resolving names to IDs,
-and following Solve's rules when changing records and activities.
+and following Solve360's rules when changing records and activities.
 
 ---
 
@@ -15,15 +15,15 @@ and following Solve's rules when changing records and activities.
 
 | Component | Name | Purpose |
 |---|---|---|
-| Remote MCP server | `solve` (`https://mcp.solve360.com`) | Exposes the Solve record, activity, and insight tools |
-| Skill | `solve-crm` | Governs correct tool use across searching, reporting, and record/activity changes |
+| Remote MCP server | `solve360` (`https://mcp.solve360.com`) | Exposes the Solve360 record, activity, and insight tools |
+| Skill | `solve360-crm` | Governs correct tool use across searching, reporting, and record/activity changes |
 
 The skill is **model-invoked**:
-Claude applies it automatically whenever your request involves Solve — searching,
+Claude applies it automatically whenever your request involves Solve360 — searching,
 reporting, or changing records and activities. You don't need to call it explicitly.
 
 Supported record types: **contacts**, **companies**, **projects** (internally `projectblogs`;
-your Solve admin may have renamed these to Properties, Jobs, Sites, Cases, etc.),
+your Solve360 admin may have renamed these to Properties, Jobs, Sites, Cases, etc.),
 and **tickets**.
 
 Activities attached to those records — tasks, notes, follow-ups, events,
@@ -34,8 +34,8 @@ and deleted.
 
 ## Requirements
 
-- **A Solve account.** Authentication uses your own Solve login via OAuth;
-  the plugin can read, create, and modify records and activities in your live Solve data,
+- **A Solve360 account.** Authentication uses your own Solve360 login via OAuth;
+  the plugin can read, create, and modify records and activities in your live Solve360 data,
   scoped to what your account is permitted to do.
 - **A Claude client that supports plugins** — Claude Code (CLI, IDE extension,
   or desktop app), or the Claude desktop app's Cowork mode.
@@ -49,7 +49,7 @@ and deleted.
 Add the marketplace, then install the plugin:
 
 ```bash
-/plugin marketplace add https://bitbucket.org/norada/solve-anthropic.git
+/plugin marketplace add solve360/solve-anthropic
 /plugin install solve360@norada
 ```
 
@@ -81,7 +81,7 @@ If the summary says `Run /reload-plugins to activate.`, run that command —
 otherwise the new version loads the next time you start Claude Code.
 
 Installing is not enough on its own —
-the Solve MCP server uses OAuth and needs a one-time sign-in:
+the Solve360 MCP server uses OAuth and needs a one-time sign-in:
 
 1. Run `/mcp`.
 2. Select `plugin:solve360:solve360` — it shows `needs authentication` — and press Enter.
@@ -103,7 +103,7 @@ Add the marketplace:
 
 1. Click the **+** to the left of the Chat/Cowork selector, then select **Add plugins**.
 2. In the window that appears, click **+** again and choose **Add from a repository**.
-3. Paste `https://bitbucket.org/norada/solve-anthropic.git` into the form and click **Sync**.
+3. Paste `https://github.com/solve360/solve-anthropic.git` into the form and click **Sync**.
 
 Install the plugin:
 
@@ -113,20 +113,20 @@ Install and connect the MCP connector:
 
 5. Click **Manage**, then open the **Connectors** tab. If you see **Connect**, click it and go to step 8. Otherwise, click **Install**.
 6. Click **Add** in the dialog that appears.
-7. A **Connect** button appears next to the solve connector — click it.
-8. A browser window opens; sign in to your Solve account and authorize the connector.
+7. A **Connect** button appears next to the solve360 connector — click it.
+8. A browser window opens; sign in to your Solve360 account and authorize the connector.
 
 The plugin is now ready to use in Cowork.
 
 **Updating.** To move to a newer version of the plugin:
 
 1. Click **Customize** in the sidebar, then open the **Plugins** tab.
-2. Click **Solve** — its page has an **Update** button.
+2. Click **Solve360** — its page has an **Update** button.
 3. If **Update** is enabled, click it and go to step 7.
 4. If **Update** is disabled, click the **solve-anthropic** link on that page,
    then open the **Personal** tab.
 5. Click the **...** icon next to **solve-anthropic** and choose **Check for updates**.
-6. Return to the **Solve** page.
+6. Return to the **Solve360** page.
    **Update** is now enabled if a new version is available — click it.
 7. Restart Cowork. The new version number is shown after the relaunch.
 
@@ -146,7 +146,7 @@ follow the `/mcp` steps under [Claude Code](#claude-code) above.
 ## Usage
 
 Just ask in natural language.
-The skill handles translating your request into the correct Solve tool calls. Examples:
+The skill handles translating your request into the correct Solve360 tool calls. Examples:
 
 - "Find contacts named Aaron"
 - "Show me companies tagged Client"
@@ -167,11 +167,11 @@ resolves names/tags to the IDs the API needs.
 
 ## How it works
 
-Solve has a specific query model (search modes, filter modes,
+Solve360 has a specific query model (search modes, filter modes,
 and a combined `ucf` structure for multi‑criteria queries),
 plus strict rules for writing records and activities. Left to guess,
 an assistant will often issue several separate searches, malformed filters,
-or invalid field values. The bundled `solve-crm` skill encodes the correct rules —
+or invalid field values. The bundled `solve360-crm` skill encodes the correct rules —
 single combined calls, name→ID resolution, date/timezone handling,
 ownership confirmation before creating private records,
 and explicit confirmation before deletes — so Claude uses the API the way Solve360 expects.
@@ -181,7 +181,7 @@ and explicit confirmation before deletes — so Claude uses the API the way Solv
 ## Support
 
 Maintained by **Norada Corp**. Questions or issues:
-[support@norada.com](mailto:support@norada.com) · [Solve MCP](https://solve360.com/api/mcp-server-for-ai-agents/)
+[support@norada.com](mailto:support@norada.com) · [Solve360 MCP](https://solve360.com/api/mcp-server-for-ai-agents/)
 
 ---
 

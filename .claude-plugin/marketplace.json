@@ -1,17 +1,17 @@
 {
   "$schema": "https://code.claude.com/schemas/marketplace-v1.json",
   "name": "norada",
-  "description": "Official Norada marketplace for the Solve CRM plugin for Claude.",
+  "description": "Official Norada marketplace for the Solve360 CRM plugin for Claude.",
   "owner": {
     "name": "Norada Corp",
     "email": "support@norada.com",
-    "url": "https://solve360.com"
+    "url": "https://norada.com"
   },
   "plugins": [
     {
-      "name": "solve",
+      "name": "solve360",
       "source": "./plugins/solve360-plugin",
-      "description": "Search, create and update Solve CRM records and activities and build reports, via remote MCP server + a skill governing correct tool use",
+      "description": "Search, create and update Solve360 CRM records and activities and build reports, via remote MCP server + a skill governing correct tool use",
       "category": "productivity"
     }
   ]
