@@ -5,9 +5,9 @@ and tickets — directly from Claude, using natural language. Search and retriev
 create and update them, add and modify activities (tasks, notes, follow-ups, deals),
 and pull calendar, deals, and time-tracking insights.
 
-This plugin connects Claude to the Solve remote MCP server and ships a skill that teaches Claude how to use its tools correctly —
+This plugin connects Claude to the Solve CRM remote MCP server and ships a skill that teaches Claude how to use its tools correctly —
 building valid queries, resolving names to IDs,
-and following Solve's rules when changing records and activities.
+and following Solve CRM's rules when changing records and activities.
 
 ---
 
@@ -19,11 +19,11 @@ and following Solve's rules when changing records and activities.
 | Skill | `solve-skill` | Governs correct tool use across searching, reporting, and record/activity changes |
 
 The skill is **model-invoked**:
-Claude applies it automatically whenever your request involves Solve — searching,
+Claude applies it automatically whenever your request involves Solve CRM — searching,
 reporting, or changing records and activities. You don't need to call it explicitly.
 
 Supported record types: **contacts**, **companies**, **projects** (internally `projectblogs`;
-your Solve admin may have renamed these to Properties, Jobs, Sites, Cases, etc.),
+your Solve CRM admin may have renamed these to Properties, Jobs, Sites, Cases, etc.),
 and **tickets**.
 
 Activities attached to those records — tasks, notes, follow-ups, events,
@@ -34,7 +34,7 @@ and deleted.
 
 ## Requirements
 
-- **A Solve account.** Authentication uses your own Solve login via OAuth;
+- **A Solve CRM account.** Authentication uses your own Solve login via OAuth;
   the plugin can read, create, and modify records and activities in your live Solve data,
   scoped to what your account is permitted to do.
 - **A Claude client that supports plugins** — Claude Code (CLI, IDE extension,
@@ -50,10 +50,10 @@ Add the marketplace, then install the plugin:
 
 ```bash
 /plugin marketplace add solve360/solve-anthropic
-/plugin install solve360@norada
+/plugin install solve-plugin@norada
 ```
 
-`solve360@norada` is `plugin-name@marketplace-name`.
+`solve-plugin@norada` is `plugin-name@marketplace-name`.
 
 Then turn on automatic updates,
 so you receive new versions of the plugin without reinstalling:
@@ -74,27 +74,27 @@ marketplaces added by hand don't auto-update by default.
 whether or not auto-update is on, run:
 
 ```bash
-/plugin install solve360@norada
+/plugin install solve-plugin@norada
 ```
 
 If the summary says `Run /reload-plugins to activate.`, run that command —
 otherwise the new version loads the next time you start Claude Code.
 
 Installing is not enough on its own —
-the Solve MCP server uses OAuth and needs a one-time sign-in:
+the Solve CRM MCP server uses OAuth and needs a one-time sign-in:
 
 1. Run `/mcp`.
-2. Select `plugin:solve360:solve360` — it shows `needs authentication` — and press Enter.
+2. Select `plugin:solve-plugin:solve-mcp` — it shows `needs authentication` — and press Enter.
 3. In the menu that opens, choose **Authenticate**.
 4. A browser window opens; sign in to Solve and approve access.
 5. Return to Claude — you'll see `Authentication successful.
-   Connected to plugin:solve360:solve360.` and the Solve tools are ready.
+   Connected to plugin:solve-plugin:solve-mcp.` and the Solve CRM tools are ready.
 
 If the browser doesn't open automatically, copy the URL shown and open it manually.
 If the redirect fails after you sign in,
 paste the full callback URL from your browser's address bar into the prompt that appears in Claude Code.
 
-This is a one-time step. To sign out, run `/mcp`, select `plugin:solve360:solve360`,
+This is a one-time step. To sign out, run `/mcp`, select `plugin:solve-plugin:solve-mcp`,
 then choose **Clear authentication**.
 
 ### Claude web/desktop (Cowork)

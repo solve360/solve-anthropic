@@ -2,7 +2,7 @@
 
 ## Every release
 
-1. Bump `version` in `plugins/solve360-plugin/.claude-plugin/plugin.json`
+1. Bump `version` in `plugins/solve-plugin/.claude-plugin/plugin.json`
 2. Commit
 3. `git push origin main`
 
@@ -18,7 +18,7 @@ drift.
 
 ```bash
 claude plugin validate --strict .
-claude plugin validate --strict ./plugins/solve360-plugin
+claude plugin validate --strict ./plugins/solve-plugin
 ```
 
 Run both. Validating the marketplace root does **not** descend into the plugin's
