@@ -1,17 +1,17 @@
 ---
-name: solve360-crm
+name: solve-skill
 description: >
-  Using Solve360 MCP/Connector searches for records (contacts, companies, project blogs, tickets) in Solve360 CRM based on complex user-defined criteria. Builds the following reports: activities, deals, follow-ups, next actions, time tracking. Loads, adds, updates and deletes records and activities. You **MUST** use this skill when asked to find records, build reports, change records or activities in Solve360 CRM, to store a Solve360 related rule or when user simply mentions Solve. Uses Solve360 MCP tools to perform all these tasks.
+  Using Solve CRM MCP/Connector searches for records (contacts, companies, project blogs, tickets) in Solve CRM based on complex user-defined criteria. Builds the following reports: activities, deals, follow-ups, next actions, time tracking. Loads, adds, updates and deletes records and activities. You **MUST** use this skill when asked to find records, build reports, change records or activities in Solve CRM, to store a Solve related rule or when user simply mentions Solve. Uses Solve CRM MCP tools to perform all these tasks.
 ---
 
-# Solve360 MCP Skill
+# Solve CRM MCP Skill
 
-This skill ensures you use the Solve360 MCP tools correctly every time. Violations of the rules
+This skill ensures you use the Solve CRM MCP tools correctly every time. Violations of the rules
 below will cause API errors, data corruption, or wrong results for the user.
 
 ## Invoke This Skill When
 
-- User mentions Solve, Solve360 or CRM
+- User mentions Solve, Solve360, or Solve CRM
 - User asks to find records based on criteria possibly consisting of multiple conditions with "and" and "or" between them
 - User asks to create, modify or delete contacts/companies/project blogs/tickets or activities. Activity types include task, tasklist, note, followup, call/interaction, photolist, google doc, website, opportunity/deal, time record, comment, linked emails, xerowidget and zendeskwidget
 - User asks to find, create, modify or delete something other than contacts, companies or project blogs because user may rename "project blog" to something specific to their business
@@ -43,14 +43,14 @@ Never guess or assume a timezone. Passing the wrong timezone produces incorrect 
 
 ## Step 2: Check for Renamed Record Types
 
-Solve360 lets organizations rename "project blog" to something else (e.g. "Project", "Case", "Room").
+Solve CRM lets organizations rename "project blog" to something else (e.g. "Project", "Case", "Room").
 If the user asks about something that's **not** a contact, company, or ticket, call
 `solve360_account` first to check if blogs have been renamed (`bloglabel` field). Use that label
 instead of "blog" or "project blog" when communicating with the user.
 
 ---
 
-## Rule for getting information about the user currently logged in Solve360 CRM
+## Rule for getting information about the user currently logged in Solve CRM
 
 When you need to get the ID of the user currently logged in Solve360 CRM, use `solve360_account` tool. It returns `userid` — use that value. ID lets you retrieve the information about the user's account using `solve360_ownership`.
 
@@ -119,7 +119,7 @@ Before creating or updating any record, fetch this information if you need:
 - If you're creating a record and `ownership` is not specified by the user,
 you **MUST** ask the user to confirm they want a private record before proceeding, abort if user declines. Do not silently create private records.
 - If `ownership` is set to a group ID, current user **MUST** have write access to it, otherwise don't attempt to create/edit the record but show an error. Call `solve360_ownership` if you need to check the user's permissions.
-- Pass `"[ID of the currently logged-in Solve360 user]"` in `ownership` to make a record private. If you don't know the ID of the currently logged-in user, call `solve360_account` to get it.
+- Pass `"[ID of the currently logged-in Solve CRM user]"` in `ownership` to make a record private. If you don't know the ID of the currently logged-in user, call `solve360_account` to get it.
 - Pass a `[group ID]` in `ownership` so that all members of that group can read and edit record — this is the standard pattern for team-shared records. When set to a **user ID**, only that user (and admins) can see the record.
 
 

@@ -1,13 +1,13 @@
-# Solve360 CRM plugin for Claude
+# Solve CRM plugin for Claude
 
-Work with your [Solve360 CRM](https://solve360.com) — contacts, companies, projects,
+Work with your [Solve CRM](https://solve360.com) — contacts, companies, projects,
 and tickets — directly from Claude, using natural language. Search and retrieve records,
 create and update them, add and modify activities (tasks, notes, follow-ups, deals),
 and pull calendar, deals, and time-tracking insights.
 
-This plugin connects Claude to the Solve360 remote MCP server and ships a skill that teaches Claude how to use its tools correctly —
+This plugin connects Claude to the Solve remote MCP server and ships a skill that teaches Claude how to use its tools correctly —
 building valid queries, resolving names to IDs,
-and following Solve360's rules when changing records and activities.
+and following Solve's rules when changing records and activities.
 
 ---
 
@@ -15,15 +15,15 @@ and following Solve360's rules when changing records and activities.
 
 | Component | Name | Purpose |
 |---|---|---|
-| Remote MCP server | `solve360` (`https://mcp.solve360.com`) | Exposes the Solve360 record, activity, and insight tools |
-| Skill | `solve360-crm` | Governs correct tool use across searching, reporting, and record/activity changes |
+| Remote MCP server | `solve-mcp` (`https://mcp.solve360.com`) | Exposes the Solve record, activity, and insight tools |
+| Skill | `solve-skill` | Governs correct tool use across searching, reporting, and record/activity changes |
 
 The skill is **model-invoked**:
-Claude applies it automatically whenever your request involves Solve360 — searching,
+Claude applies it automatically whenever your request involves Solve — searching,
 reporting, or changing records and activities. You don't need to call it explicitly.
 
 Supported record types: **contacts**, **companies**, **projects** (internally `projectblogs`;
-your Solve360 admin may have renamed these to Properties, Jobs, Sites, Cases, etc.),
+your Solve admin may have renamed these to Properties, Jobs, Sites, Cases, etc.),
 and **tickets**.
 
 Activities attached to those records — tasks, notes, follow-ups, events,
@@ -34,8 +34,8 @@ and deleted.
 
 ## Requirements
 
-- **A Solve360 account.** Authentication uses your own Solve360 login via OAuth;
-  the plugin can read, create, and modify records and activities in your live Solve360 data,
+- **A Solve account.** Authentication uses your own Solve login via OAuth;
+  the plugin can read, create, and modify records and activities in your live Solve data,
   scoped to what your account is permitted to do.
 - **A Claude client that supports plugins** — Claude Code (CLI, IDE extension,
   or desktop app), or the Claude desktop app's Cowork mode.
@@ -81,14 +81,14 @@ If the summary says `Run /reload-plugins to activate.`, run that command —
 otherwise the new version loads the next time you start Claude Code.
 
 Installing is not enough on its own —
-the Solve360 MCP server uses OAuth and needs a one-time sign-in:
+the Solve MCP server uses OAuth and needs a one-time sign-in:
 
 1. Run `/mcp`.
 2. Select `plugin:solve360:solve360` — it shows `needs authentication` — and press Enter.
 3. In the menu that opens, choose **Authenticate**.
-4. A browser window opens; sign in to Solve360 and approve access.
+4. A browser window opens; sign in to Solve and approve access.
 5. Return to Claude — you'll see `Authentication successful.
-   Connected to plugin:solve360:solve360.` and the Solve360 tools are ready.
+   Connected to plugin:solve360:solve360.` and the Solve tools are ready.
 
 If the browser doesn't open automatically, copy the URL shown and open it manually.
 If the redirect fails after you sign in,
@@ -135,7 +135,7 @@ The plugin is now ready to use in Cowork.
 From the marketplace root, load the plugin directly without installing:
 
 ```bash
-claude --plugin-dir ./plugins/solve360-plugin
+claude --plugin-dir ./plugins/solve-plugin
 ```
 
 The MCP server still needs authenticating —
@@ -167,21 +167,21 @@ resolves names/tags to the IDs the API needs.
 
 ## How it works
 
-Solve360 has a specific query model (search modes, filter modes,
+Solve has a specific query model (search modes, filter modes,
 and a combined `ucf` structure for multi‑criteria queries),
 plus strict rules for writing records and activities. Left to guess,
 an assistant will often issue several separate searches, malformed filters,
-or invalid field values. The bundled `solve360-crm` skill encodes the correct rules —
+or invalid field values. The bundled `solve-crm` skill encodes the correct rules —
 single combined calls, name→ID resolution, date/timezone handling,
 ownership confirmation before creating private records,
-and explicit confirmation before deletes — so Claude uses the API the way Solve360 expects.
+and explicit confirmation before deletes — so Claude uses the API the way Solve expects.
 
 ---
 
 ## Support
 
 Maintained by **Norada Corp**. Questions or issues:
-[support@norada.com](mailto:support@norada.com) · [Solve360 MCP](https://solve360.com/api/mcp-server-for-ai-agents/)
+[support@norada.com](mailto:support@norada.com) · [Solve MCP](https://solve360.com/api/mcp-server-for-ai-agents/)
 
 ---
 
