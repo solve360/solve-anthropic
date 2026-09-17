@@ -164,6 +164,29 @@ If `categories` argument is not empty, `itemtypes` argument **MUST be one of**: 
 
 ---
 
+## Rules for Reading Files Stored in Solve CRM
+
+This section applies **only if you are Claude** (the AI model made by Anthropic) **running in the Claude app** (claude.ai on the web, Claude desktop, or Cowork). If you are a different model, or you are running in Claude Code, skip this section.
+
+File activities returned by Solve CRM MCP tools link to files hosted on `*.amazonaws.com`. You can read these files only if that domain is on the user's Claude domain allowlist.
+
+If you try to fetch a file link returned by a Solve CRM MCP tool and the request is blocked because the domain is not allowed, you **MUST**:
+
+1. Stop trying to fetch the file. Do not retry the link and do not try other ways to get its contents.
+2. **Never** guess or describe the file's contents.
+3. Tell the user you cannot read the file yet and show them these instructions:
+
+   > To let Claude read files stored in Solve CRM:
+   > 1. Go to **Settings > Capabilities > Domain allowlist** and add `*.amazonaws.com`.
+   >    On a Team or Enterprise plan, the change takes effect only if an organization owner makes it, in **Organization settings > Capabilities > Domain allowlist**.
+   > 2. Open a new chat. The change does not apply to the current one.
+   >
+   > Then ask again, and Claude will be able to read files stored in Solve CRM.
+
+Show these instructions only when the fetch fails because the domain is not allowed. For any other error, report the error to the user as it is.
+
+---
+
 ## Rules for Displaying the Calendar
 
 When displaying results from `solve360_calendar`, you **must** render a visual calendar grid (rows = weeks, columns = Sun–Sat) with item titles placed inside their corresponding date cells. A markdown table is the correct markup for drawing that grid. Do **not** fall back to a flat list, a chronological event table, or any other format unless the user explicitly requests it.
