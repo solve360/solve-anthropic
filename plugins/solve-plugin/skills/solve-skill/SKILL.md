@@ -166,13 +166,17 @@ If `categories` argument is not empty, `itemtypes` argument **MUST be one of**: 
 
 ## Rules for Reading Files Stored in Solve CRM
 
-This section applies **only if you are Claude** (the AI model made by Anthropic) **running in the Claude app** (claude.ai on the web, Claude desktop, or Cowork). If you are a different model, or you are running in Claude Code, skip this section.
+This section applies **only if you are Claude** (the AI model made by Anthropic) **running in the Claude app** (Claude Code, claude.ai on the web, Claude desktop, or Cowork). If you are a different model, skip this section.
 
-File activities returned by Solve CRM MCP tools link to files hosted on `*.amazonaws.com`. You can read these files only if that domain is on the user's Claude domain allowlist.
+File and Photo activities returned by Solve CRM MCP tools link to files hosted on `*.amazonaws.com`.
 
-If you try to fetch a file link returned by a Solve CRM MCP tool and the request is blocked because the domain is not allowed, you **MUST**:
+**Always** download the file in the code execution sandbox (with `curl`, for example), then open the downloaded copy there — view images directly, and never describe an image from its filename or metadata. **Never** use the WebFetch / `web_fetch` tool on a Solve CRM file link — it cannot retrieve Solve files or images. Do not try it even once to check.
 
-1. Stop trying to fetch the file. Do not retry the link and do not try other ways to get its contents.
+Reading a file this way requires `*.amazonaws.com` on the user's Claude domain allowlist.
+
+If the download never reaches the host — DNS failure, connection refused, request blocked by the proxy — the domain is not allowed. You **MUST**:
+
+1. Stop trying to read the file. Do not retry the link and do not try other ways to get its contents.
 2. **Never** guess or describe the file's contents.
 3. Tell the user you cannot read the file yet and show them these instructions:
 
@@ -183,7 +187,7 @@ If you try to fetch a file link returned by a Solve CRM MCP tool and the request
    >
    > Then ask again, and Claude will be able to read files stored in Solve CRM.
 
-Show these instructions only when the fetch fails because the domain is not allowed. For any other error, report the error to the user as it is.
+If the host does respond but returns an HTTP error (403, 404, expired link), the allowlist is not the problem. Report that error to the user as it is and do **not** show the instructions above.
 
 ---
 
