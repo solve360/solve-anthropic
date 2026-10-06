@@ -1,7 +1,7 @@
 ---
 name: solve-skill
 description: >
-  Using Solve CRM MCP/Connector searches for records (contacts, companies, project blogs, tickets) in Solve CRM based on complex user-defined criteria. Builds the following reports: activities, deals, follow-ups, next actions, time tracking. Loads, adds, updates and deletes records and activities. You **MUST** use this skill when asked to find records, build reports, change records or activities in Solve CRM, to store a Solve related rule or when user simply mentions Solve. Uses Solve CRM MCP tools to perform all these tasks.
+  Using Solve CRM MCP/Connector searches for records (contacts, companies, project blogs, tickets) in Solve CRM based on complex user-defined criteria. Builds the following reports: activities, deals, follow-ups, next actions, time tracking. Loads, adds, updates and deletes records and activities. You **MUST** use this skill when asked to find records, build reports, change records or activities in Solve CRM or when user simply mentions Solve. Uses Solve CRM MCP tools to perform all these tasks.
 ---
 
 # Solve CRM MCP Skill
@@ -144,6 +144,48 @@ Before creating or updating any activity, you **must** call `solve360_docs("acti
 If user asks to create an activity but you cannot find an appropriate parent for it, ask user if they want you to create one or cancel.
 
 **Never make multiple update calls for the same activity.** Collect all changes and pass them in a single `solve360_update_activity` call.
+
+---
+
+## Rules for Attaching Files and Photos (File and Photo Activities)
+
+Attaching a file takes two tool calls plus one HTTP request made outside MCP. Each step must succeed before the next one starts. Any deviation causes an error or leaves a broken file entry. A photo follows exactly the same steps, with `activity_type` set to `"photo"`.
+
+Before you start:
+- Read `solve360_docs("activity")`, as for any activity.
+- Pick a valid parent. Files can **only** be added to a record (`Record > File`) or to a task (`Record > Task List > Task > File`). **Never** add a file to any other activity.
+- Photos can **only** be added to a Photo List (`Record > Photo List > Photo`). **Never** add a photo to any other record or activity.
+- You need the file at a local path you can read, a shell that can run `curl`, and network access. If any of these is missing, tell the user you cannot upload the file and stop. **Never** create the File activity in that case.
+
+Handle **one file at a time**. Finish every step for one file before starting the next. **Never** create several File activities first and upload afterwards: the upload URL is short-lived.
+
+1. **Validate the file.** Skip it and tell the user why if either check fails:
+   - A file must be a PDF: the name ends in `.pdf` (any case). A photo must be a GIF, JPEG or PNG image: the name ends in `.gif`, `.jpg`, `.jpeg` or `.png` (any case)
+   - It must be 20 MB or smaller. Get the exact size in bytes as digits only, with no spaces. **Never** estimate it. Example for Linux/macOS: `wc -c < '<path>' | tr -d ' '`
+2. **Create the File or Photo activity.** Call `solve360_create_activity` with:
+   - `activity_type`: `"file"` or `"photo"`
+   - `parent_id`: ID of the record or task for a file, ID of the photo list for a photo
+   - `record_type_id`: type of the record the file belongs to (for a task, the record that holds the task list; for a photo, the record that holds the photo list)
+   - `data`: `{"filename": "<name with extension>", "filesize": "<exact byte count>", "caption": "<title given by user, otherwise filename>"}`. All values are strings.
+
+   From the response, keep `id`, `data.action` and `data.data[0]`.
+3. **Upload the file.** Send exactly **one** multipart/form-data POST to `data.action`:
+   - Add every key/value pair from `data.data[0]` as a form field. Copy each value character for character and keep the same order. Do not decode, reformat, drop or add fields.
+   - Add the file last, in the field named `file`.
+
+   With `curl`, use `--form-string` for every `data.data[0]` field. **Never** use `-F` for these, because `-F` treats values that start with `@` or `<` as file references:
+   ```
+   curl -sS -w '\nHTTP %{http_code}\n' '<data.action>' \
+     --form-string '<key1>=<value1>' \
+     --form-string '<key2>=<value2>' \
+     -F 'file=@"<path>";type=<MIME type>'
+   ```
+   Use MIME type `application/pdf` for a PDF, `image/gif` for GIF, `image/jpeg` for JPEG, `image/png` for PNG.
+   Put each argument in single quotes. If a value contains `'`, write it as `'\''`.
+4. **Check the result.** Success means HTTP 200 with an empty body. Any other status, or any body text, is a failure: show the user the status and body, then stop. **Do not** retry and **do not** call `solve360_commit_activity`.
+5. **Commit the file.** Call `solve360_commit_activity` with the same `record_type_id` and `activity_type` as in step 2 and `activity_id` set to `id` from the step 2 response. The file or photo is not attached until this call succeeds. If it fails, show the error.
+
+Tell the user a file or photo is attached only after step 5 succeeds.
 
 ---
 
