@@ -184,4 +184,4 @@ Maintained by **Norada Corp**. Questions or issues:
 
 ## License
 
-See [LICENSE](./LICENSE).
+See [LICENSE](../../LICENSE).
